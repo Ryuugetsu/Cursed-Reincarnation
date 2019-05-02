@@ -19,7 +19,7 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
 
   
     public int index = 0;
-    public int defaultIndex = 0;
+    //public int defaultIndex = 0;
 
     public List<string> data = new List<string>();
     
@@ -28,34 +28,34 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
     // Start is called before the first frame update
     void Start()
     {
-        //pega os botões direito e esquerdos, armazena o componente tipo LayoutElement numa variavel e a da um Set no flexibleWidith como 0;
+        //pega os botões direito e esquerdos, armazena o componente tipo LayoutElement numa variavel e a da um Set no flexibleWidith como 0 (isso faz que a largura se ajuste ao conteudo);
         buttonRightLayoutElement = buttonRight.GetComponent<LayoutElement>();
         buttonRightLayoutElement.flexibleWidth = 0;
 
         buttonLeftLayoutElement = buttonLeft.GetComponent<LayoutElement>();
         buttonLeftLayoutElement.flexibleWidth = 0;
 
-        buttonLeft.onClick.AddListener(OnLeftClicked);
-        buttonRight.onClick.AddListener(OnRightClicked);
+        buttonLeft.onClick.AddListener(OnLeftClicked); //função do botão para esperar um click
+        buttonRight.onClick.AddListener(OnRightClicked);//função do botão para esperar um click
 
-        index = defaultIndex;
+        //index = defaultIndex;
         text.text = data[index];
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         //mudar o preferredwidth(lagura) do botão para que ele tenha sempre o mesmo tamanhos da altura do botão (formando um quadrado)
         buttonRightLayoutElement.preferredWidth = buttonRight.GetComponent<RectTransform>().rect.height;
         buttonLeftLayoutElement.preferredWidth = buttonLeft.GetComponent<RectTransform>().rect.height;
     }
-    
-    void OnLeftClicked()
+
+    //ação executada ao clicar na seta da esquerda (mudar o index da lista)
+    public void OnLeftClicked()
     {
         if(index == 0)
         {
-            index = data.Count - 1;
+            index = 0;
         }
         else
         {
@@ -63,11 +63,13 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
         }
         text.text = data[index];
     }
+
+    //ação executada ao clicar na seta da direita
     void OnRightClicked()
     {
         if((index + 1) >= data.Count)
         {
-            index = 0;
+            index = data.Count-1;
         }
         else
         {
@@ -76,6 +78,7 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
         text.text = data[index];
     }
 
+    //metodo criado para caso esteja usando botoes de navegação, avisar ao game manager
     public void OnSelect(BaseEventData eventData)
     {
         GameManager.gameManager.hasSelected = true;
@@ -87,15 +90,6 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
         {
             OnRightClicked();
         }
-    }
-    public void OnDeselect()
-    {
-        StartCoroutine(Deselect());
-    }
-    private IEnumerator Deselect()
-    {
-        yield return new WaitForSeconds(0.5f);
-        GameManager.gameManager.hasSelected = false;
     }
 
     

@@ -15,11 +15,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject mainMenu;
 
+    private MenuConfig menuConfigComp;
    
 
     // Start is called before the first frame update
     void Start()
     {
+        menuConfigComp = menuConfig.GetComponent<MenuConfig>();
+
         LoadConfig();
 
         {
@@ -32,13 +35,10 @@ public class MainMenu : MonoBehaviour
             {
                 continuar.SetActive(false);
                 carregar.SetActive(false);
-            }
-            menuConfig.SetActive(true);
-            menuConfig.SetActive(false);
+            }            
         } //Verifica se existe algum save no game se ouver ativa os botões continuar e carregar jogo              
 
         mainMenu.SetActive(false);
-        menuConfig.SetActive(false);
         titleScreen.SetActive(true);
 
     }
@@ -46,10 +46,10 @@ public class MainMenu : MonoBehaviour
     {
         TitleScreen();
 
-        if(menuConfig.activeInHierarchy == true && Input.GetKeyDown(KeyCode.Escape))
+        if(menuConfig.activeInHierarchy == true && mainMenu.activeInHierarchy == false && Input.GetKeyDown(KeyCode.Escape))
         {
-            mainMenu.SetActive(true);
             menuConfig.SetActive(false);
+            mainMenu.SetActive(true);
         }
     }
 
@@ -73,23 +73,37 @@ public class MainMenu : MonoBehaviour
     {       
         if (Input.anyKey && titleScreen.activeInHierarchy)
         {
+
+            GameManager.gameManager.hasSelected = false;
             mainMenu.SetActive(true);
             titleScreen.SetActive(false);
+            menuConfig.SetActive(false);
         }
     }
 
     public void LoadConfig()
     {
-        menuConfig.SetActive(true);
 
         //load configurações gráficas
-        menuConfig.GetComponent<MenuConfig>().fullscreenSelector.index = PlayerPrefs.GetInt("Fullscreen", 0);
+        menuConfigComp.fullscreenSelector.index = PlayerPrefs.GetInt("Fullscreen", 0);
+        menuConfigComp.monitorSelector.index = PlayerPrefs.GetInt("Monitor", 0);
+        menuConfigComp.GetResolutions();
+        menuConfigComp.resolutionsDropdown.value= PlayerPrefs.GetInt("Resolution", 0);
+        menuConfigComp.qualitySelector.index = PlayerPrefs.GetInt("Quality", 0);
+        menuConfigComp.vSyncSelector.index = PlayerPrefs.GetInt("V-Sync", 0);
+        menuConfigComp.antiAliasingSelector.index = PlayerPrefs.GetInt("Anti-Aliasing", 0);
+        menuConfigComp.motionBlurSelector.index = PlayerPrefs.GetInt("MotionBlur", 0);
+        menuConfigComp.ambientOclusionSelector.index = PlayerPrefs.GetInt("AmbientOclusion", 0);
+        menuConfigComp.bloomSelector.index = PlayerPrefs.GetInt("Bloom", 0);
+        menuConfigComp.depthOfFieldSelector.index = PlayerPrefs.GetInt("DepthOfField", 0);
+        menuConfigComp.ChromaticSelector.index = PlayerPrefs.GetInt("ChromaticAberration", 0);
 
         //load configurações de som
-        menuConfig.GetComponent<MenuConfig>().sliderVolumePrincipal.value = PlayerPrefs.GetFloat("VolumePrincipal", 0);
-        menuConfig.GetComponent<MenuConfig>().sliderVolumeSFX.value = PlayerPrefs.GetFloat("VolumeSFX", 0);
-        menuConfig.GetComponent<MenuConfig>().sliderVolumeMusica.value = PlayerPrefs.GetFloat("VolumeMusica", 0);
+        menuConfigComp.sliderVolumePrincipal.value = PlayerPrefs.GetFloat("VolumePrincipal", 0);
+        menuConfigComp.sliderVolumeSFX.value = PlayerPrefs.GetFloat("VolumeSFX", 0);
+        menuConfigComp.sliderVolumeMusica.value = PlayerPrefs.GetFloat("VolumeMusica", 0);
 
-        menuConfig.SetActive(false);
+        Debug.Log("Configurações Careegadas!");
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +23,20 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject); //evita que o Game Manager seja destruido ao trocar de fases para n perder os dados atuais não salvos
     }
-    
+    public void Update()
+    {
+        if (Input.GetAxis("Mouse X") != 0.0f || Input.GetAxis("Mouse Y") != 0.0f)
+        {
+            hasSelected = false;
+        }
+    }
     
    
 
+   
+
+    public void HardDeselect()
+    {
+        hasSelected = false;
+    }
 }
