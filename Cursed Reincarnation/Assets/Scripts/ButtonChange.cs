@@ -10,9 +10,9 @@ public class ButtonChange : MonoBehaviour
 {
 
     [SerializeField]
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI text = null;
     [SerializeField]
-    private GameObject optionPanel;
+    private GameObject optionPanel = null;
    
 
 

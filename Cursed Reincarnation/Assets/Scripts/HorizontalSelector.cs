@@ -15,7 +15,7 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
     public Button mainButton;
 
     [SerializeField]
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI text = null;
 
   
     public int index = 0;

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class SelectButton : MonoBehaviour
 {
-    [SerializeField] private GameObject firstButton;
+    [SerializeField] private GameObject firstButton = null;
     [SerializeField] private GameObject optionalFirstButton = null;
-    [SerializeField] private GameObject lastButton;
+    [SerializeField] private GameObject lastButton = null;
 
 
     // Update is called once per frame

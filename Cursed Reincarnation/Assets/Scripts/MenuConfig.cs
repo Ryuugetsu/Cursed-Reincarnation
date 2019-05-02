@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class MenuConfig : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI graficsCardText;
+    private TextMeshProUGUI graficsCardText = null;
 
     public AudioMixer audioMixer;
     public Slider sliderVolumePrincipal;
@@ -38,7 +38,7 @@ public class MenuConfig : MonoBehaviour
     public HorizontalSelector ChromaticSelector;
 
 
-    [SerializeField] private GameObject[] optionsPanels;
+    [SerializeField] private GameObject[] optionsPanels = null;
     private int indexPanel = 0;
 
     //Esse if é um treta sininstra que vc concerteza n vai querer entender como funciona, só oq importa saber é que ele cria o metodo SetPosition(posX, posY), que serve para setar a posição da janela do jogo durante o Runtime

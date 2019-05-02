@@ -8,12 +8,12 @@ public class MainMenu : MonoBehaviour
 {
     public bool hasSave;
 
-    [SerializeField] private GameObject continuar;
-    [SerializeField] private GameObject carregar;
+    [SerializeField] private GameObject continuar = null;
+    [SerializeField] private GameObject carregar = null;
 
-    [SerializeField] private GameObject menuConfig;
-    [SerializeField] private GameObject titleScreen;
-    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject menuConfig = null;
+    [SerializeField] private GameObject titleScreen = null;
+    [SerializeField] private GameObject mainMenu = null;
 
     private MenuConfig menuConfigComp;
    
