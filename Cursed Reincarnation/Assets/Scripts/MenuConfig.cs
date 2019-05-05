@@ -36,6 +36,7 @@ public class MenuConfig : MonoBehaviour
     public HorizontalSelector bloomSelector;
     public HorizontalSelector depthOfFieldSelector;
     public HorizontalSelector ChromaticSelector;
+    public HorizontalSelector shadowsSelector;
 
 
     [SerializeField] private GameObject[] optionsPanels = null;
@@ -89,6 +90,7 @@ public class MenuConfig : MonoBehaviour
         SetBloom(bloomSelector.index);
         SetDephOfField(depthOfFieldSelector.index);
         SetChromatic(ChromaticSelector.index);
+        SetShadows(shadowsSelector.index);
 
         ChangeOptionsPanelsByButton();
 
@@ -304,6 +306,21 @@ public class MenuConfig : MonoBehaviour
             mainPostProcessProfile.GetSetting<ChromaticAberration>().active = false;
         }
         ChromaticSelector.index = chromaticIndex;
+    }
+
+    public void SetShadows(int shadowIndex)
+    {
+        if (shadowIndex == 1)
+        {
+            QualitySettings.shadows = ShadowQuality.HardOnly;
+        }else if (shadowIndex == 2)
+        {
+            QualitySettings.shadows = ShadowQuality.All;
+        }
+        else
+        {
+            QualitySettings.shadows = ShadowQuality.Disable;
+        }
     }
 
     private void GraficCard() //pega o nome e o tamanho da memoria da placa de video e seta na variavel de texto nomeada graficsCardText.text 

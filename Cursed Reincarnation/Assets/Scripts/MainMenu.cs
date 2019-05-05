@@ -103,7 +103,7 @@ public class MainMenu : MonoBehaviour
         menuConfigComp.sliderVolumeSFX.value = PlayerPrefs.GetFloat("VolumeSFX", 0);
         menuConfigComp.sliderVolumeMusica.value = PlayerPrefs.GetFloat("VolumeMusica", 0);
 
-        Debug.Log("Configurações Careegadas!");
+        Debug.Log("Configurações Caregadas!");
 
     }
 }
