@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
+[ExecuteInEditMode]
 public class HorizontalSelector : MonoBehaviour, ISelectHandler
 {
     public Button buttonRight;
@@ -14,14 +15,11 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
 
     public Button mainButton;
 
-    [SerializeField]
-    private TextMeshProUGUI text = null;
+    public TMP_Dropdown textDropdown = null;
 
   
-    public int index = 0;
-    //public int defaultIndex = 0;
+    //public int index = 0;
 
-    public List<string> data = new List<string>();
     
     
 
@@ -37,10 +35,7 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
 
         buttonLeft.onClick.AddListener(OnLeftClicked); //função do botão para esperar um click
         buttonRight.onClick.AddListener(OnRightClicked);//função do botão para esperar um click
-
-        //index = defaultIndex;
-        text.text = data[index];
-
+        
     }
 
     void Update()
@@ -53,29 +48,29 @@ public class HorizontalSelector : MonoBehaviour, ISelectHandler
     //ação executada ao clicar na seta da esquerda (mudar o index da lista)
     public void OnLeftClicked()
     {
-        if(index == 0)
+        if(textDropdown.value == 0)
         {
-            index = 0;
+            textDropdown.value = 0;
         }
         else
         {
-            index--;
+            textDropdown.value--;
         }
-        text.text = data[index];
+        //textDropdown.value = index;
     }
 
     //ação executada ao clicar na seta da direita
     void OnRightClicked()
     {
-        if((index + 1) >= data.Count)
+        if((textDropdown.value + 1) >= textDropdown.options.Count)
         {
-            index = data.Count-1;
+            textDropdown.value = textDropdown.options.Count - 1;
         }
         else
         {
-            index++;
+            textDropdown.value++;
         }
-        text.text = data[index];
+        //textDropdown.value = index;
     }
 
     //metodo criado para caso esteja usando botoes de navegação, avisar ao game manager

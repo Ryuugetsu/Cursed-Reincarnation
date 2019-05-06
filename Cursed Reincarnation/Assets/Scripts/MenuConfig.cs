@@ -28,7 +28,7 @@ public class MenuConfig : MonoBehaviour
     int m_monitorIndex = -1;
     private Resolution[] resolutions;
     public HorizontalSelector qualitySelector;
-    public TMP_Dropdown resolutionsDropdown;
+    public HorizontalSelector resolutionsSelector;
     public HorizontalSelector vSyncSelector;
     public HorizontalSelector antiAliasingSelector;
     public HorizontalSelector motionBlurSelector;
@@ -38,6 +38,7 @@ public class MenuConfig : MonoBehaviour
     public HorizontalSelector ChromaticSelector;
     public HorizontalSelector shadowsSelector;
 
+    public bool loadingConfig = false;
 
     [SerializeField] private GameObject[] optionsPanels = null;
     private int indexPanel = 0;
@@ -60,43 +61,30 @@ public class MenuConfig : MonoBehaviour
     void Start()
     {
         mainPostProcessLayer = GameObject.FindWithTag("MainCamera").GetComponent<PostProcessLayer>();
-
-        GetResolutions();
+        
 
         GraficCard(); //chama o metodo de pegar o nome da placa de video da maquina em que o jogo esta sendo executado
 
-
         //verifica quantos monitores estão conectados e alimenta o MonitorHorizontalSelector
         Debug.Log("displays connected: " + Display.displays.Length);
-        monitorSelector.data.Clear();
-        monitorSelector.data.Add("Monitor " + 1);
-        if (Display.displays.Length == 2)
+        monitorSelector.textDropdown.ClearOptions();
+        List<string> monitores = new List<string>();
+        for (int i = 0; i < Display.displays.Length; i++)
         {
-            monitorSelector.data.Add("Monitor " + 2);
+            monitores.Add("Monitor " + (i + 1));
         }
-        
+        monitorSelector.textDropdown.AddOptions(monitores);
+        monitorSelector.textDropdown.RefreshShownValue();
+
+        LoadConfig();
+
     }
 
 
     // Update is called once per frame
     void Update()
-    {
-        SetFullScreen(fullscreenSelector.index); //envia o indice da posição do vetor que contem as opções de fullscreen
-        SetQuality(qualitySelector.index);
-        SetVSync(vSyncSelector.index);
-        SetAntiAliasing(antiAliasingSelector.index);
-        SetMotionBlur(motionBlurSelector.index);
-        SetAmbientOclusion(ambientOclusionSelector.index);
-        SetBloom(bloomSelector.index);
-        SetDephOfField(depthOfFieldSelector.index);
-        SetChromatic(ChromaticSelector.index);
-        SetShadows(shadowsSelector.index);
-
+    { 
         ChangeOptionsPanelsByButton();
-
-        SetMonitor(monitorSelector.index);
-
-
     }
 
 
@@ -115,7 +103,7 @@ public class MenuConfig : MonoBehaviour
         
         //full screen
         Screen.fullScreen = fullscreen;
-        fullscreenSelector.index = fullscreenIndex;
+        //fullscreenSelector.index = fullscreenSelector.textDropdown.value;
     }
     
     public void SetMonitor(int monitorIndex) //Monitor
@@ -141,7 +129,7 @@ public class MenuConfig : MonoBehaviour
                 }
                 else if(Display.displays.Length == 1)
                 {
-                    monitorSelector.index = 0;
+                    monitorSelector.textDropdown.value = 0;
                     //SetPosition(0, 0);
                     monitorSelector.OnLeftClicked();
                 }
@@ -149,6 +137,7 @@ public class MenuConfig : MonoBehaviour
             }
 
         }
+        //monitorSelector.index = monitorSelector.textDropdown.value;
     }
 
     IEnumerator OnMonitorSwith()
@@ -159,7 +148,7 @@ public class MenuConfig : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             Screen.fullScreen = false;
             GetResolutions();
-            resolutionsDropdown.value = resolutionsDropdown.value - 1;            
+            resolutionsSelector.textDropdown.value = resolutionsSelector.textDropdown.value - 1;            
 
         }
         else
@@ -170,10 +159,9 @@ public class MenuConfig : MonoBehaviour
 
     public void GetResolutions() //Metodo que alimenta o resolutionsDropdown com as resoluções compativeis com seu monitor. 
     {
-
         resolutions = Screen.resolutions; //1- Alimenta o Vector resoltion com todas as resoluções compativeis com o monitor.
 
-        resolutionsDropdown.ClearOptions(); //2- Apaga o conteudo atual do dropdown.
+        resolutionsSelector.textDropdown.ClearOptions(); //2- Apaga o conteudo atual do dropdown.
 
         List<string> options = new List<string>(); //3- Cria uma lista de strings que vai em breve armazenar as resoluções convertidas em string.
 
@@ -189,20 +177,24 @@ public class MenuConfig : MonoBehaviour
                 currentResolutinIndex = i; //10- Armazena o indice da lista correnpondente a resolução atual
             }
         }
-        resolutionsDropdown.AddOptions(options); //7- Alimenta o dropdown com os valores da lista de strings.
-        resolutionsDropdown.value = currentResolutinIndex; //11- Seta o indice do dropdown para o indice da resolução atual.
-        resolutionsDropdown.RefreshShownValue(); //12- Atualiza o valor atualmente sendo apresentado no dropdown.
+        resolutionsSelector.textDropdown.AddOptions(options); //7- Alimenta o dropdown com os valores da lista de strings.
+        resolutionsSelector.textDropdown.value = currentResolutinIndex; //11- Seta o indice do dropdown para o indice da resolução atual.
+        resolutionsSelector.textDropdown.RefreshShownValue(); //12- Atualiza o valor atualmente sendo apresentado no dropdown.
+
+        loadingConfig = true;
     }
 
     public void SetResolution(int resolutionIndex) //Resolução 
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        //resolutionsSelector.index = resolutionsSelector.textDropdown.value;
     }
 
     public void SetQuality(int qualityIndex) //Quality 
     {
         QualitySettings.SetQualityLevel(qualityIndex);
+        //.index = qualitySelector.textDropdown.value;
     }
 
     public void SetVSync(int vSyncIndex) //V-Sync 
@@ -215,6 +207,7 @@ public class MenuConfig : MonoBehaviour
         {
             QualitySettings.vSyncCount = 0;
         }
+        //vSyncSelector.index = vSyncSelector.textDropdown.value;
     }
 
     public void SetAntiAliasing(int antiAliasingIndex) //Anti-Aliasing 
@@ -238,7 +231,7 @@ public class MenuConfig : MonoBehaviour
                 break;
 
         }
-        antiAliasingSelector.index = antiAliasingIndex;
+        //antiAliasingSelector.index = antiAliasingSelector.textDropdown.value;
     }
 
     public void SetMotionBlur(int motionBlurIndex) //Motion Blur 
@@ -251,8 +244,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<MotionBlur>().active = false;
         }
-
-        motionBlurSelector.index = motionBlurIndex;
+        //motionBlurSelector.index = motionBlurSelector.textDropdown.value;
     }
 
     public void SetAmbientOclusion(int ambientOclusionIndex) //Ambient Oclusion 
@@ -265,8 +257,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<AmbientOcclusion>().active = false;
         }
-
-        ambientOclusionSelector.index = ambientOclusionIndex;
+        //ambientOclusionSelector.index = ambientOclusionSelector.textDropdown.value;
     }
 
     public void SetBloom(int bloomIndex) //Bloom 
@@ -279,10 +270,10 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<Bloom>().active = false;
         }
-        bloomSelector.index = bloomIndex;
+        //bloomSelector.index = bloomSelector.textDropdown.value;
     }
 
-    public void SetDephOfField(int depthOfFieldIndex) //Depth Of Field 
+    public void SetDepthOfField(int depthOfFieldIndex) //Depth Of Field 
     {
         if (depthOfFieldIndex == 0)
         {
@@ -292,7 +283,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<DepthOfField>().active = false;
         }
-        depthOfFieldSelector.index = depthOfFieldIndex;
+        //depthOfFieldSelector.index = depthOfFieldSelector.textDropdown.value;
     }
 
     public void SetChromatic(int chromaticIndex) //Chromatic Aberration 
@@ -305,7 +296,8 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<ChromaticAberration>().active = false;
         }
-        ChromaticSelector.index = chromaticIndex;
+        //ChromaticSelector.index = ChromaticSelector.textDropdown.value;
+
     }
 
     public void SetShadows(int shadowIndex)
@@ -321,6 +313,7 @@ public class MenuConfig : MonoBehaviour
         {
             QualitySettings.shadows = ShadowQuality.Disable;
         }
+        //shadowsSelector.index = shadowsSelector.textDropdown.value;
     }
 
     private void GraficCard() //pega o nome e o tamanho da memoria da placa de video e seta na variavel de texto nomeada graficsCardText.text 
@@ -360,17 +353,18 @@ public class MenuConfig : MonoBehaviour
         float volumeMusica = 0;
 
         //graficos
-        PlayerPrefs.SetInt("Fullscreen", fullscreenSelector.index);
-        PlayerPrefs.SetInt("Monitor", monitorSelector.index);
-        PlayerPrefs.SetInt("Resolution", resolutionsDropdown.value);
-        PlayerPrefs.SetInt("Quality", qualitySelector.index);
-        PlayerPrefs.SetInt("V-Sync", vSyncSelector.index);
-        PlayerPrefs.SetInt("Anti-Aliasing", antiAliasingSelector.index);
-        PlayerPrefs.SetInt("MotionBlur", motionBlurSelector.index);
-        PlayerPrefs.SetInt("AmbientOclusion", ambientOclusionSelector.index);
-        PlayerPrefs.SetInt("Bloom", bloomSelector.index);
-        PlayerPrefs.SetInt("DepthOfField", depthOfFieldSelector.index);
-        PlayerPrefs.SetInt("ChromaticAberration", ChromaticSelector.index);
+        PlayerPrefs.SetInt("Fullscreen", fullscreenSelector.textDropdown.value);
+        PlayerPrefs.SetInt("Monitor", monitorSelector.textDropdown.value);
+        PlayerPrefs.SetInt("Resolution", resolutionsSelector.textDropdown.value);
+        PlayerPrefs.SetInt("Quality", qualitySelector.textDropdown.value);
+        PlayerPrefs.SetInt("V-Sync", vSyncSelector.textDropdown.value);
+        PlayerPrefs.SetInt("Anti-Aliasing", antiAliasingSelector.textDropdown.value);
+        PlayerPrefs.SetInt("MotionBlur", motionBlurSelector.textDropdown.value);
+        PlayerPrefs.SetInt("AmbientOclusion", ambientOclusionSelector.textDropdown.value);
+        PlayerPrefs.SetInt("Bloom", bloomSelector.textDropdown.value);
+        PlayerPrefs.SetInt("DepthOfField", depthOfFieldSelector.textDropdown.value);
+        PlayerPrefs.SetInt("ChromaticAberration", ChromaticSelector.textDropdown.value);
+        PlayerPrefs.SetInt("Shadows", shadowsSelector.textDropdown.value);
 
         //Som
         audioMixer.GetFloat("VolumePrincipal", out volumePrincipal);    //pega o Exposed Parameter nomeado "VolumePrincipal" do audioMixer e manda para a variavel local de nome volumePrincipal 
@@ -390,6 +384,47 @@ public class MenuConfig : MonoBehaviour
 
     }
 
+    public void LoadConfig()
+    {
+
+        //load configurações gráficas
+        fullscreenSelector.textDropdown.value = PlayerPrefs.GetInt("Fullscreen", 0);
+        monitorSelector.textDropdown.value = PlayerPrefs.GetInt("Monitor", 0);
+        //menuConfigComp.GetResolutions();
+        //menuConfigComp.resolutionsSelector.textDropdown.value = PlayerPrefs.GetInt("Resolution", 0);
+        StartCoroutine(loadResolution());
+        qualitySelector.textDropdown.value = PlayerPrefs.GetInt("Quality", 0);
+        vSyncSelector.textDropdown.value = PlayerPrefs.GetInt("V-Sync", 0);
+        antiAliasingSelector.textDropdown.value = PlayerPrefs.GetInt("Anti-Aliasing", 0);
+        motionBlurSelector.textDropdown.value = PlayerPrefs.GetInt("MotionBlur", 0);
+        ambientOclusionSelector.textDropdown.value = PlayerPrefs.GetInt("AmbientOclusion", 0);
+        bloomSelector.textDropdown.value = PlayerPrefs.GetInt("Bloom", 0);
+        depthOfFieldSelector.textDropdown.value = PlayerPrefs.GetInt("DepthOfField", 0);
+        ChromaticSelector.textDropdown.value = PlayerPrefs.GetInt("ChromaticAberration", 0);
+        shadowsSelector.textDropdown.value = PlayerPrefs.GetInt("Shadows", 0);
+
+        //load configurações de som
+        sliderVolumePrincipal.value = PlayerPrefs.GetFloat("VolumePrincipal", 0);
+        sliderVolumeSFX.value = PlayerPrefs.GetFloat("VolumeSFX", 0);
+        sliderVolumeMusica.value = PlayerPrefs.GetFloat("VolumeMusica", 0);
+
+
+        //refresh all 
+        HorizontalSelector[] refresh = GetComponentsInChildren<HorizontalSelector>();
+        foreach (HorizontalSelector r in refresh)
+        {
+            r.textDropdown.RefreshShownValue();
+        }
+        Debug.Log("Configurações Caregadas!");
+    }
+    IEnumerator loadResolution()
+    {
+        loadingConfig = false;
+        GetResolutions();
+        yield return new WaitUntil(() => loadingConfig == true);
+        loadingConfig = false;
+        resolutionsSelector.textDropdown.value = PlayerPrefs.GetInt("Resolution", 0);
+    }
 
     #region Troca de Paineis
 

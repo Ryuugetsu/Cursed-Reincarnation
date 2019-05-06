@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
     {
         menuConfigComp = menuConfig.GetComponent<MenuConfig>();
 
-        LoadConfig();
+        //LoadConfig();
 
         {
             if (hasSave)
@@ -81,29 +81,5 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void LoadConfig()
-    {
-
-        //load configurações gráficas
-        menuConfigComp.fullscreenSelector.index = PlayerPrefs.GetInt("Fullscreen", 0);
-        menuConfigComp.monitorSelector.index = PlayerPrefs.GetInt("Monitor", 0);
-        menuConfigComp.GetResolutions();
-        menuConfigComp.resolutionsDropdown.value= PlayerPrefs.GetInt("Resolution", 0);
-        menuConfigComp.qualitySelector.index = PlayerPrefs.GetInt("Quality", 0);
-        menuConfigComp.vSyncSelector.index = PlayerPrefs.GetInt("V-Sync", 0);
-        menuConfigComp.antiAliasingSelector.index = PlayerPrefs.GetInt("Anti-Aliasing", 0);
-        menuConfigComp.motionBlurSelector.index = PlayerPrefs.GetInt("MotionBlur", 0);
-        menuConfigComp.ambientOclusionSelector.index = PlayerPrefs.GetInt("AmbientOclusion", 0);
-        menuConfigComp.bloomSelector.index = PlayerPrefs.GetInt("Bloom", 0);
-        menuConfigComp.depthOfFieldSelector.index = PlayerPrefs.GetInt("DepthOfField", 0);
-        menuConfigComp.ChromaticSelector.index = PlayerPrefs.GetInt("ChromaticAberration", 0);
-
-        //load configurações de som
-        menuConfigComp.sliderVolumePrincipal.value = PlayerPrefs.GetFloat("VolumePrincipal", 0);
-        menuConfigComp.sliderVolumeSFX.value = PlayerPrefs.GetFloat("VolumeSFX", 0);
-        menuConfigComp.sliderVolumeMusica.value = PlayerPrefs.GetFloat("VolumeMusica", 0);
-
-        Debug.Log("Configurações Caregadas!");
-
-    }
+    
 }
