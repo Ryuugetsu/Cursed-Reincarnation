@@ -46,12 +46,11 @@ public class MainMenu : MonoBehaviour
     {
         TitleScreen();
 
-        /*
         if(menuConfig.activeInHierarchy == true && mainMenu.activeInHierarchy == false && Input.GetKeyDown(KeyCode.Escape))
         {
             menuConfig.SetActive(false);
             mainMenu.SetActive(true);
-        }*/
+        }
     }
 
     public void NewGame()

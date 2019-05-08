@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.IO;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
-    private string gameDataFileName = "PortuguesMenu.json";
+
 
     public bool hasSelected = false;
 
@@ -32,16 +31,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void LoadText()
-    {
-        string filePath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
-
-        if (File.Exists(filePath))
-        {
-            string dataAsJson = File.ReadAllText(filePath);
-            //GameData loadedData = JsonUtility.FromJson<GameData>(dataAsJson);
-        }
-    }
+   
 
    
 

@@ -42,11 +42,6 @@ public class MenuConfig : MonoBehaviour
 
     [SerializeField] private GameObject[] optionsPanels = null;
     private int indexPanel = 0;
-    [SerializeField] private GameObject applyPanel = null;
-    public bool hasChanges = false;
-    [SerializeField] private GameObject mainMenu = null;
-
-    #region Metodo que manipula a Posição da Janela
 
     //Esse if é um treta sininstra que vc concerteza n vai querer entender como funciona, só oq importa saber é que ele cria o metodo SetPosition(posX, posY), que serve para setar a posição da janela do jogo durante o Runtime
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
@@ -60,7 +55,6 @@ public class MenuConfig : MonoBehaviour
         SetWindowPos(FindWindow(null, "Cursed Reincarnation"), 0, x, y, resX, resY, resX * resY == 0 ? 1 : 0);
     }
 #endif
-    #endregion
 
 
     // Start is called before the first frame update
@@ -89,20 +83,11 @@ public class MenuConfig : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         ChangeOptionsPanelsByButton();
-        if (hasChanges == true && Input.GetKeyDown(KeyCode.Escape))
-        {
-            applyPanel.SetActive(true);
-        }
-        else if (hasChanges == false && Input.GetKeyDown(KeyCode.Escape))
-        {
-            applyPanel.SetActive(false);
-            CloseMenuConfig();
-        }
     }
 
-    #region Grafics Setings
+
 
     //configurações de graficos
     public void SetFullScreen(int fullscreenIndex) //Fullscreen 
@@ -118,7 +103,7 @@ public class MenuConfig : MonoBehaviour
         
         //full screen
         Screen.fullScreen = fullscreen;
-        hasChanges = true;
+        //fullscreenSelector.index = fullscreenSelector.textDropdown.value;
     }
     
     public void SetMonitor(int monitorIndex) //Monitor
@@ -152,7 +137,7 @@ public class MenuConfig : MonoBehaviour
             }
 
         }
-        hasChanges = true;
+        //monitorSelector.index = monitorSelector.textDropdown.value;
     }
 
     IEnumerator OnMonitorSwith()
@@ -203,13 +188,13 @@ public class MenuConfig : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        hasChanges = true;
+        //resolutionsSelector.index = resolutionsSelector.textDropdown.value;
     }
 
     public void SetQuality(int qualityIndex) //Quality 
     {
         QualitySettings.SetQualityLevel(qualityIndex);
-        hasChanges = true;
+        //.index = qualitySelector.textDropdown.value;
     }
 
     public void SetVSync(int vSyncIndex) //V-Sync 
@@ -222,7 +207,7 @@ public class MenuConfig : MonoBehaviour
         {
             QualitySettings.vSyncCount = 0;
         }
-        hasChanges = true;
+        //vSyncSelector.index = vSyncSelector.textDropdown.value;
     }
 
     public void SetAntiAliasing(int antiAliasingIndex) //Anti-Aliasing 
@@ -246,7 +231,7 @@ public class MenuConfig : MonoBehaviour
                 break;
 
         }
-        hasChanges = true;
+        //antiAliasingSelector.index = antiAliasingSelector.textDropdown.value;
     }
 
     public void SetMotionBlur(int motionBlurIndex) //Motion Blur 
@@ -259,7 +244,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<MotionBlur>().active = false;
         }
-        hasChanges = true;
+        //motionBlurSelector.index = motionBlurSelector.textDropdown.value;
     }
 
     public void SetAmbientOclusion(int ambientOclusionIndex) //Ambient Oclusion 
@@ -272,7 +257,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<AmbientOcclusion>().active = false;
         }
-        hasChanges = true;
+        //ambientOclusionSelector.index = ambientOclusionSelector.textDropdown.value;
     }
 
     public void SetBloom(int bloomIndex) //Bloom 
@@ -285,7 +270,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<Bloom>().active = false;
         }
-        hasChanges = true;
+        //bloomSelector.index = bloomSelector.textDropdown.value;
     }
 
     public void SetDepthOfField(int depthOfFieldIndex) //Depth Of Field 
@@ -298,7 +283,7 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<DepthOfField>().active = false;
         }
-        hasChanges = true;
+        //depthOfFieldSelector.index = depthOfFieldSelector.textDropdown.value;
     }
 
     public void SetChromatic(int chromaticIndex) //Chromatic Aberration 
@@ -311,7 +296,8 @@ public class MenuConfig : MonoBehaviour
         {
             mainPostProcessProfile.GetSetting<ChromaticAberration>().active = false;
         }
-        hasChanges = true;
+        //ChromaticSelector.index = ChromaticSelector.textDropdown.value;
+
     }
 
     public void SetShadows(int shadowIndex)
@@ -327,7 +313,7 @@ public class MenuConfig : MonoBehaviour
         {
             QualitySettings.shadows = ShadowQuality.Disable;
         }
-        hasChanges = true;
+        //shadowsSelector.index = shadowsSelector.textDropdown.value;
     }
 
     private void GraficCard() //pega o nome e o tamanho da memoria da placa de video e seta na variavel de texto nomeada graficsCardText.text 
@@ -342,53 +328,25 @@ public class MenuConfig : MonoBehaviour
         }
     }
 
-    #endregion
 
-
-    #region Sound Settings
 
     //configurações de som
     public void SetVolumePrincipal(float volume)
     {
         audioMixer.SetFloat("VolumePrincipal", volume);
-        hasChanges = true;
     }
     public void SetVolumeSFX(float volume)
     {
         audioMixer.SetFloat("VolumeSFX", volume);
-        hasChanges = true;
     }
     public void SetVolumeMusica(float volume)
     {
         audioMixer.SetFloat("VolumeMusica", volume);
-        hasChanges = true;
     }
 
-    #endregion
 
-
-    #region Save and Load Settings
-
-    //Apply window config
-    public void Apply(bool apply)
-    {
-
-        if (apply == true)
-        {
-            SaveConfig();
-        }
-        else
-        {
-            LoadConfig();
-        }
-        hasChanges = false;
-        applyPanel.SetActive(false);
-        CloseMenuConfig();
-
-    }
-    
-    //Save Settings in playerprefs
-    private void SaveConfig()
+    //save playerprefs
+    private void OnDisable()
     {
         float volumePrincipal = 0;
         float volumeSFX = 0;
@@ -420,9 +378,12 @@ public class MenuConfig : MonoBehaviour
 
         PlayerPrefs.Save();
         Debug.Log("Configurações salvas!");
+
+        GameManager.gameManager.hasSelected = false;
+
+
     }
-       
-    //Load Settings
+
     public void LoadConfig()
     {
 
@@ -464,9 +425,6 @@ public class MenuConfig : MonoBehaviour
         loadingConfig = false;
         resolutionsSelector.textDropdown.value = PlayerPrefs.GetInt("Resolution", 0);
     }
-
-    #endregion
-
 
     #region Troca de Paineis
 
@@ -516,23 +474,4 @@ public class MenuConfig : MonoBehaviour
     }
 
     #endregion
-
-    private void CloseMenuConfig()
-    {
-        if(mainMenu != null)
-        {
-            mainMenu.SetActive(true);
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
-    }
-
-    private void OnDisable()
-    {
-        hasChanges = false;
-        GameManager.gameManager.hasSelected = false;
-    }
 }
