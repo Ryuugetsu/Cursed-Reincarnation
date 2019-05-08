@@ -3498,7 +3498,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 541116430}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2128433971}
+        m_MethodName: Apply
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &541116430
@@ -12947,7 +12958,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1513472873}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2128433971}
+        m_MethodName: Apply
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1513472873
@@ -16504,11 +16526,15 @@ MonoBehaviour:
   depthOfFieldSelector: {fileID: 2086936213}
   ChromaticSelector: {fileID: 1506692795}
   shadowsSelector: {fileID: 726565460}
+  loadingConfig: 0
   optionsPanels:
   - {fileID: 1782264577}
   - {fileID: 635280907}
   - {fileID: 1180015111}
   - {fileID: 1575295341}
+  applyPanel: {fileID: 1496008451}
+  hasChanges: 0
+  mainMenu: {fileID: 2037493374}
 --- !u!1 &2139119826
 GameObject:
   m_ObjectHideFlags: 0
