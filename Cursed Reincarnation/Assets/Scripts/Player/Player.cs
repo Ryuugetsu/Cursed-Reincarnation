@@ -4,26 +4,29 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    public bool isGrounded;
-    public bool isCrouching;
+    public bool isGrounded; //Varivel bolleana de teste usada para verificar se o personagem está no chão
+    public bool isCrouching; //Varivel bolleana de teste usada para verificar se o personagem está no abaixado
 
-    private float speed;
-    private float w_speed = 0.05f;
-    private float r_speed = 0.1f;
-    private float c_speed = 0.025f;
-    private float rotSpeed = 3.0f;
-    private float jumpHeight = 135.0f;
+    [SerializeField] private float speed; //velocidade do estado atual (andando, correndo ou abaixado)
+    [SerializeField] private float w_speed = 0.05f; //Velocidade Andando
+    [SerializeField] private float r_speed = 0.1f; //Velocidade Correndo
+    [SerializeField] private float c_speed = 0.025f; //Velocidade Abaixado
+    [SerializeField] private float rotSpeed = 3.0f; //Velocidade de rotacionamente
+    [SerializeField] private float jumpHeight = 135.0f; //Altura do pulo
 
-    Rigidbody rb;
-    Animator anim;
+    Rigidbody rb; //componente RigidyBody do Player
+    Animator anim; 
     CapsuleCollider col;
 
+    public float hor; //variavel que receberá o input Horizontal
+    public float ver; //variavel que receberá o input Vertical
 
-    private GameObject camera;
+    [SerializeField] private Transform cameraBase;
 
 
 	// Use this for initialization
 	void Start () {
+
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
@@ -32,17 +35,39 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        PlayerMovement();
+
+        Crounch();
+        Jump();
+        MovementAnimation();
+
+	}
+
+    void PlayerMovement()
+    {
+        hor = Input.GetAxisRaw("Horizontal");
+        ver = Input.GetAxisRaw("Vertical");
+        if (hor > 0.3 || hor < -0.3 || ver > 0.3 || ver < -0.3)
         {
-            if(isCrouching)
+            Vector3 playerMovement = new Vector3(hor, 0, ver) * speed * Time.deltaTime;
+            transform.rotation = Quaternion.Euler(0, cameraBase.rotation.eulerAngles.y, 0);            
+            transform.Translate(playerMovement, Space.Self);
+        }
+        
+    }
+    
+    void Crounch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (isCrouching)
             {
                 isCrouching = false;
                 anim.SetBool("isCrouching", false);
                 col.height = 2;
-                col.center = new Vector3(0,1,0);
+                col.center = new Vector3(0, 1, 0);
             }
-            
+
             else
             {
                 isCrouching = true;
@@ -52,33 +77,30 @@ public class Player : MonoBehaviour {
                 col.center = new Vector3(0, 0.5f, 0);
             }
         }
+    }
 
-        var z = Input.GetAxis("Vertical") * speed;
-        var y = Input.GetAxis("Horizontal") * rotSpeed;
-        
-        transform.Translate(0,0,z);
-        
-        transform.Rotate(0, y, 0);
-        
-        
-
-        if(Input.GetKey(KeyCode.Space) && isGrounded == true)
+    void Jump()
+    {
+        if (Input.GetKey(KeyCode.Space) && isGrounded == true)
         {
             rb.AddForce(0, jumpHeight, 0);
             anim.SetTrigger("isJumping");
             isCrouching = false;
             isGrounded = false;
         }
+    }
 
-        if(isCrouching)
+    void MovementAnimation()
+    {
+        if (isCrouching)
         {
-            if(Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
                 anim.SetBool("isIdle", false);
             }
-            else if(Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S))
             {
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
@@ -88,21 +110,21 @@ public class Player : MonoBehaviour {
             {
                 anim.SetBool("isWalking", false);
                 anim.SetBool("isRunning", false);
-                anim.SetBool("isIdle", true); 
+                anim.SetBool("isIdle", true);
             }
         }
 
-        else if(Input.GetKey(KeyCode.LeftShift))
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = r_speed;
             //Run
-            if(Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 anim.SetBool("isWalking", false);
                 anim.SetBool("isRunning", true);
                 anim.SetBool("isIdle", false);
             }
-            else if(Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S))
             {
                 anim.SetBool("isWalking", false);
                 anim.SetBool("isRunning", true);
@@ -112,21 +134,21 @@ public class Player : MonoBehaviour {
             {
                 anim.SetBool("isWalking", false);
                 anim.SetBool("isRunning", false);
-                anim.SetBool("isIdle", true); 
+                anim.SetBool("isIdle", true);
             }
         }
 
-        else if(!isCrouching)
+        else if (!isCrouching)
         {
             speed = w_speed;
             //Standing
-            if(Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
                 anim.SetBool("isIdle", false);
             }
-            else if(Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S))
             {
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
@@ -136,11 +158,10 @@ public class Player : MonoBehaviour {
             {
                 anim.SetBool("isWalking", false);
                 anim.SetBool("isRunning", false);
-                anim.SetBool("isIdle", true); 
+                anim.SetBool("isIdle", true);
             }
         }
-
-	}
+    }
 
     void OnCollisionEnter()
     {

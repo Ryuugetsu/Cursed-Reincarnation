@@ -9,25 +9,19 @@ public class CameraFollow : MonoBehaviour
     Vector3 followPos;
     public float clampAngle = 80.0f;
     public float inputSensitivy = 150.0f;
-    public GameObject cameraObj;
-    public GameObject playerObj;
-    public float camDistanceXToPlayer;
-    public float camDistanceYToPlayer;
-    public float camDistanceZToPlayer;
     public float mouseX;
     public float mouseY;
     public float finalInputX;
     public float finalInputZ;
-    public float smoothX;
-    public float smoothY;
-    private float rotY = 0.0f;
+    public float rotY = 0.0f;
     private float rotX = 0.0f;
 
-
+    [SerializeField] private Player player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<Player>();
         Vector3 rot = transform.localRotation.eulerAngles;
         rotY = rot.y;
         rotX = rot.x;
@@ -52,6 +46,7 @@ public class CameraFollow : MonoBehaviour
         rotX = Mathf.Clamp(rotX, -clampAngle, +clampAngle);
         Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
         transform.rotation = localRotation;
+        
     }
 
     void LateUpdate()

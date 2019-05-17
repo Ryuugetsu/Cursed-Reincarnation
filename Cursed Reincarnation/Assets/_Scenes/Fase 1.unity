@@ -13200,6 +13200,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 1
   isCrouching: 0
+  speed: 0
+  w_speed: 3
+  r_speed: 5
+  c_speed: 2
+  rotSpeed: 3
+  jumpHeight: 135
+  hor: 0
+  ver: 0
+  cameraBase: {fileID: 1750467728}
 --- !u!136 &1111053821
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21060,6 +21069,8 @@ MonoBehaviour:
   finalInputZ: 0
   smoothX: 0
   smoothY: 0
+  rotY: 0
+  player: {fileID: 0}
 --- !u!1 &1766627706
 GameObject:
   m_ObjectHideFlags: 0
