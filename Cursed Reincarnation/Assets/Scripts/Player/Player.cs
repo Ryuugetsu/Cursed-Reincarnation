@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -21,6 +22,13 @@ public class Player : MonoBehaviour {
     public float hor; //variavel que receberá o input Horizontal
     public float ver; //variavel que receberá o input Vertical
 
+    //novo - atalhos para testar mouse buttons etc
+    public KeyCode attack1;
+
+
+    //novo - vida do player p parar as animações enquanto não temos tela de game over
+    public Slider healthbar;
+
     [SerializeField] private Transform cameraBase;
 
 
@@ -31,15 +39,23 @@ public class Player : MonoBehaviour {
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
         isGrounded = true;
+        Cursor.lockState = CursorLockMode.Locked; //travar e destravar o cursor durante o jogo
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(healthbar.value <= 0) return;
+
         PlayerMovement();
 
         Crounch();
         Jump();
+        Combat();
         MovementAnimation();
+
+        if(Input.GetKeyDown("escape"))
+            Cursor.lockState = CursorLockMode.None;
 
 	}
 
@@ -88,6 +104,26 @@ public class Player : MonoBehaviour {
             isCrouching = false;
             isGrounded = false;
         }
+    }
+
+    void Combat()
+    {
+        if (Input.GetKeyDown (attack1) && isGrounded == true)
+        {
+            anim.SetBool("attacking2", true);
+        }
+        else 
+        {
+			anim.SetBool ("attacking2", false);
+		}
+
+        /*
+        if (Input.GetKeyDown (attack2) && isGrounded == true)
+        {
+            anim.SetBool("attacking1", true);
+
+            
+        }*/
     }
 
     void MovementAnimation()
