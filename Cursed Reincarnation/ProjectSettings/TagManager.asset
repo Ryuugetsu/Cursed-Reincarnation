@@ -6,6 +6,7 @@ TagManager:
   tags:
   - "Configura\xE7\xF5es"
   - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
