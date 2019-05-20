@@ -24,7 +24,7 @@ public class Hunt : MonoBehaviour
         
         Vector3 direction = player.position - this.transform.position;
         float angle = Vector3.Angle(direction, this.transform.forward);
-        if (Vector3.Distance(player.position, this.transform.position) < 10 && angle < 30)
+        if (Vector3.Distance(player.position, this.transform.position) < 10 && angle < 60)
         {
 
             direction.y = 0;
