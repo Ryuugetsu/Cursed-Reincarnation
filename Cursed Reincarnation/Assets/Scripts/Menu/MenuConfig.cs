@@ -438,7 +438,7 @@ public class MenuConfig : MonoBehaviour
     //troca os painels usando os botões Q E
     private void ChangeOptionsPanelsByButton()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("R1"))
         {
 
             indexPanel++;
@@ -450,7 +450,7 @@ public class MenuConfig : MonoBehaviour
             GameManager.gameManager.hasSelected = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetButtonDown("L1"))
         {
             indexPanel--;
             if (indexPanel < 0)
