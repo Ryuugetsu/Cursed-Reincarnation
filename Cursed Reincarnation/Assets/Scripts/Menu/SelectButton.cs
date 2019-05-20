@@ -19,7 +19,7 @@ public class SelectButton : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
 
             //Seleciona o primeiro filho deste gameObject
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetAxisRaw("Vertical") < -0.3)
             {
                 if (firstButton.activeInHierarchy)
                 {
@@ -32,13 +32,15 @@ public class SelectButton : MonoBehaviour
                 GameManager.gameManager.hasSelected = true;
             }
 
+            
             //Seleciona o ultimo filho deste gameObject
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetAxisRaw("Vertical") > 0.3)
             {
                 EventSystem.current.SetSelectedGameObject(lastButton);
                 GameManager.gameManager.hasSelected = true;
 
             }
+            
         }
     }
 
