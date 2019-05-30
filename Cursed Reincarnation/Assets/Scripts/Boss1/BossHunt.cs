@@ -2,51 +2,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class BossHunt : MonoBehaviour
 {
-    public Transform player;
-    static Animator ani;
-    public Slider healthbar;
+    public Transform player;               // Reference to the player's position.
+    public Slider healthbar;        // Reference to this enemy's health.
+    static Animator anim;
+    NavMeshAgent nav;               // Reference to the nav mesh agent.
 
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake ()
     {
-        ani = GetComponent<Animator>();
+        // Set up the references.
+        player = GameObject.FindGameObjectWithTag ("Player").transform;
+        anim = GetComponent<Animator>();
+        nav = GetComponent <NavMeshAgent> ();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void Update ()
     {
-        if (healthbar.value <= 0) return;
-
-        Vector3 direction = player.position - this.transform.position;
-        float angle = Vector3.Angle(direction,this.transform.forward);
-        if (Vector3.Distance(player.position,this.transform.position) < 20 && angle < 30)
+        float distance = Vector3.Distance(player.position, transform.position);
+    
+        if(healthbar.value >= 0)
         {
-            direction.y = 0;
+            if(distance <= 20){
+            // ... set the destination of the nav mesh agent to the player.
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking", true);
+                nav.SetDestination (player.position);
+            }
+            else if(distance <= 5)
+            {
+                nav.Stop();
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+                anim.SetBool("isAttacking", true);
+                nav.ResetPath();
 
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
-                                      Quaternion.LookRotation(direction), 0.1f);
-            ani.SetBool("isIdle", false);
-            //ani.SetTrigger("roar");
-            if(direction.magnitude > 5)
-            {
-                this.transform.Translate(0, 0, 0.05f);
-                ani.SetBool("isWalking", true);
-                ani.SetBool("isAttacking", false);
             }
-            else
+            else if(distance >= 30)
             {
-                ani.SetBool("isAttacking", true);
-                ani.SetBool("isWalking", false);
+                nav.Stop();
+                anim.SetBool("isWalking",false);
+                anim.SetBool("isAttacking",false);
+                anim.SetBool("isIdle",true);
+                nav.ResetPath();
             }
+            
+            //anim.SetBool("isAttacking", false); 
         }
+        // Otherwise...
         else
         {
-            ani.SetBool("isIdle", true);
-            ani.SetBool("isAttacking", false);
-            ani.SetBool("isWalking", false);
+            // ... disable the nav mesh agent.
+            nav.enabled = false;
         }
     }
+
+
 }

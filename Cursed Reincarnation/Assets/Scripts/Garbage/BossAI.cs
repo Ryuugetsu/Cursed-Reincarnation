@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class BossAI : MonoBehaviour
 {
-    public float lookRadius = 30f;
+    public float lookRadius = 20f;
     Transform player;
     NavMeshAgent agent;
 
@@ -14,8 +14,8 @@ public class BossAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = PlayerManager.instance.player.transform;
-        //player = GameObject.FindGameObjectWithTag("Player").transform;
+        //player = PlayerManager.instance.player.transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
 
     }
