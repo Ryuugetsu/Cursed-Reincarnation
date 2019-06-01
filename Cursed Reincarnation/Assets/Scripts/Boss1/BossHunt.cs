@@ -10,6 +10,7 @@ public class BossHunt : MonoBehaviour
     public Slider healthbar;        // Reference to this enemy's health.
     static Animator anim;
     NavMeshAgent nav;               // Reference to the nav mesh agent.
+    bool isDead = false;
 
 
     void Awake ()
@@ -25,41 +26,41 @@ public class BossHunt : MonoBehaviour
     {
         float distance = Vector3.Distance(player.position, transform.position);
     
-        if(healthbar.value >= 0)
+        if(healthbar.value >= 0 && !isDead)
         {
-            if(distance <= 20){
-            // ... set the destination of the nav mesh agent to the player.
-                anim.SetBool("isIdle",false);
-                anim.SetBool("isWalking", true);
+            if(distance < 20 && distance > 2){
+                nav.updatePosition = true;
                 nav.SetDestination (player.position);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isAttacking", false);
+                anim.SetBool("isWalking", true);
+                
             }
-            else if(distance <= 5)
+            else if(distance <= 2)
             {
-                nav.Stop();
+                nav.updatePosition = false;
                 anim.SetBool("isIdle",false);
                 anim.SetBool("isWalking",false);
                 anim.SetBool("isAttacking", true);
-                nav.ResetPath();
+            }
+            else{
+                anim.SetBool("isIdle",false);
+            }
 
-            }
-            else if(distance >= 30)
-            {
-                nav.Stop();
-                anim.SetBool("isWalking",false);
-                anim.SetBool("isAttacking",false);
-                anim.SetBool("isIdle",true);
-                nav.ResetPath();
-            }
             
             //anim.SetBool("isAttacking", false); 
         }
-        // Otherwise...
+
         else
         {
-            // ... disable the nav mesh agent.
+            nav.updatePosition = false;
+            isDead = true;
+            //anim.SetBool("isDead", true);
             nav.enabled = false;
         }
     }
+
+
 
 
 }

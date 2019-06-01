@@ -14,11 +14,12 @@ public class CollisionDetectBoss : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag != opponent) return;
-        healthbar.value -= 20;
+        healthbar.value -= 150;
+        
         if (healthbar.value <= 0)
         {
             anim.SetBool("isDead", true);
-            Destroy(enemy,2.0f);
+            Destroy(enemy,5.0f);
         }
     }
 
