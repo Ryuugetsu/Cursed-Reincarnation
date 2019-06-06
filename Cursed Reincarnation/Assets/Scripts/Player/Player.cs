@@ -45,6 +45,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        // Impedir funcionamento das ações caso a vida esteja 0
         if(healthbar.value <= 0) return;
 
         PlayerMovement();
@@ -68,6 +69,9 @@ public class Player : MonoBehaviour {
             Vector3 playerMovement = new Vector3(hor, 0, ver) * speed * Time.deltaTime;
             transform.rotation = Quaternion.Euler(0, cameraBase.rotation.eulerAngles.y, 0);            
             transform.Translate(playerMovement, Space.Self);
+
+            anim.SetFloat("velX", hor);
+            anim.SetFloat("velY", ver);
         }
         
     }
@@ -108,6 +112,7 @@ public class Player : MonoBehaviour {
 
     void Combat()
     {
+        //soco simples
         if (Input.GetKeyDown (attack1) && isGrounded == true)
         {
             anim.SetBool("attacking2", true);
@@ -117,7 +122,7 @@ public class Player : MonoBehaviour {
 			anim.SetBool ("attacking2", false);
 		}
 
-        /*
+        /* ataque 2 - chute simples
         if (Input.GetKeyDown (attack2) && isGrounded == true)
         {
             anim.SetBool("attacking1", true);
@@ -129,14 +134,8 @@ public class Player : MonoBehaviour {
     void MovementAnimation()
     {
         if (isCrouching)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                anim.SetBool("isWalking", true);
-                anim.SetBool("isRunning", false);
-                anim.SetBool("isIdle", false);
-            }
-            else if (Input.GetKey(KeyCode.S))
+        {//abaixado
+            if (Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D))
             {
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
@@ -153,17 +152,20 @@ public class Player : MonoBehaviour {
         else if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = r_speed;
-            //Run
-            if (Input.GetKey(KeyCode.W))
+            //correr
+            if ( Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.D))
             {
                 anim.SetBool("isWalking", false);
                 anim.SetBool("isRunning", true);
                 anim.SetBool("isIdle", false);
             }
+
+
+
             else if (Input.GetKey(KeyCode.S))
             {
-                anim.SetBool("isWalking", false);
-                anim.SetBool("isRunning", true);
+                anim.SetBool("isWalking", true);
+                anim.SetBool("isRunning", false);
                 anim.SetBool("isIdle", false);
             }
             else
@@ -177,19 +179,14 @@ public class Player : MonoBehaviour {
         else if (!isCrouching)
         {
             speed = w_speed;
-            //Standing
-            if (Input.GetKey(KeyCode.W))
+            //de pé
+            if ( Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D))
             {
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
                 anim.SetBool("isIdle", false);
             }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                anim.SetBool("isWalking", true);
-                anim.SetBool("isRunning", false);
-                anim.SetBool("isIdle", false);
-            }
+
             else
             {
                 anim.SetBool("isWalking", false);
