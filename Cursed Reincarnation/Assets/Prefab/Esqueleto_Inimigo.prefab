@@ -1240,8 +1240,8 @@ GameObject:
   - component: {fileID: 5672631759178363459}
   - component: {fileID: 5672631759178363458}
   m_Layer: 0
-  m_Name: Cylinder
-  m_TagString: Enemy
+  m_Name: PorreteCollider
+  m_TagString: EnemyDamage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2424,7 +2424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 5672631759285243761}
-  opponent: Player
+  opponent: PlayerDamage
   enemy: {fileID: 5672631759797954116}
 --- !u!114 &5672631759797954114
 MonoBehaviour:

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float speed; //velocidade do estado atual (andando, correndo ou abaixado)
     [SerializeField] private float w_speed = 0.05f; //Velocidade Andando
     [SerializeField] private float r_speed = 0.1f; //Velocidade Correndo
+    [SerializeField] private float h_speed = 0.2f; //Velocidade Correndo mais rápido
     [SerializeField] private float c_speed = 0.025f; //Velocidade Abaixado
     [SerializeField] private float rotSpeed = 3.0f; //Velocidade de rotacionamente
     [SerializeField] private float jumpHeight = 135.0f; //Altura do pulo

@@ -14,7 +14,7 @@ public class CollisionDetectBoss : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag != opponent) return;
-        healthbar.value -= 150;
+        healthbar.value -= 50;
         
         if (healthbar.value <= 0)
         {

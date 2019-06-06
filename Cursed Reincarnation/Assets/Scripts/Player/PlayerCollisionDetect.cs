@@ -12,6 +12,10 @@ public class PlayerCollisionDetect : MonoBehaviour
     public GameObject enemy;
     public GameObject boss;
 
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,19 +24,9 @@ public class PlayerCollisionDetect : MonoBehaviour
         if (healthbar.value <= 0)
         {
             anim.SetBool("isDead", true);
-            Destroy(enemy, 2.0f);
+            //tela de game over ~~
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
