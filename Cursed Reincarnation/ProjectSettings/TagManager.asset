@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - EnemyDamage
   - PlayerDamage
+  - Chest
+  - RUN
   layers:
   - Default
   - TransparentFX

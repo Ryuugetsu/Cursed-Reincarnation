@@ -16,7 +16,7 @@ public class Spawn : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             InvokeRepeating("Spawner", 1, 2); // função / delay / num de inimigos
-            Destroy(gameObject, 11); // destroi o spawntrigger
+            Destroy(gameObject, 6); // destroi o spawntrigger
             gameObject.GetComponent<BoxCollider>().enabled = false;
             //StartCoroutine(Delay());
         }   
