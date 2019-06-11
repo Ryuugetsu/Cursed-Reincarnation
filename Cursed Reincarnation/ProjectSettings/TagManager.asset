@@ -6,6 +6,11 @@ TagManager:
   tags:
   - "Configura\xE7\xF5es"
   - Ground
+  - Enemy
+  - EnemyDamage
+  - PlayerDamage
+  - Chest
+  - RUN
   layers:
   - Default
   - TransparentFX
