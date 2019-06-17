@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class thornRight : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Trap;
+    public bool Triggered = false;
+
+    void OnTriggerEnter()
     {
-        
+        if (!Triggered)
+        {
+            Trap.GetComponent<Animation>().Play("ThornRight");
+            Triggered = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerExit(Collider other)
     {
-        
+        Triggered = false;
     }
+
 }

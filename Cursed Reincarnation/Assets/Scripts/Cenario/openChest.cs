@@ -4,33 +4,27 @@ using UnityEngine;
 
 public class openChest : MonoBehaviour
 {
-    Animator anim;
+    public GameObject Chest;
+    public bool Triggered = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnTriggerEnter()
     {
-        anim = GetComponent<Animator>();
+        if (!Triggered)
+        {
+            Chest.GetComponent<Animation>().Play("Open");
+            Triggered = true;
+        }
+        else
+        {
+            Chest.GetComponent<Animation>().Play("close");
+            Triggered = false;
+        }
     }
 
-    void Update()
-    {
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        anim.SetTrigger("open");
-    }
-
+    /*
     void OnTriggerExit(Collider other)
     {
-        anim.enabled = true;
+        Triggered = false;
     }
-
-    void pauseAnimationEvent()
-    {
-        anim.enabled = false;
-    }
-
-
+    */
 }
