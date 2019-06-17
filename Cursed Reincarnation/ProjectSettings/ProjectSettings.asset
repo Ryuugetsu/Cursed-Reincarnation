@@ -623,7 +623,7 @@ PlayerSettings:
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
     Build: 0
-    Collab: 1
+    Collab: 0
     ErrorHub: 0
     Hub: 0
     UNet: 1
@@ -646,10 +646,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: ca28321f-53c8-48a4-a83c-045f86314eec
+  cloudProjectId: 448546ef-29c2-41df-9c69-81d90db757a8
   framebufferDepthMemorylessMode: 0
   projectName: Cursed Reincarnation
-  organizationId: cursed-reincarnation
+  organizationId: skynt
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

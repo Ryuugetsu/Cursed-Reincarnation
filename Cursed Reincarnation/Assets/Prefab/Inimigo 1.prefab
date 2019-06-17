@@ -1,12 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &3404862833562367
+--- !u!114 &2282590456262854823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149290818522096666}
+  m_GameObject: {fileID: 2827832848250050278}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b0ecfa85e7916e49b8143dbf7dd2627, type: 3}
@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCam: {fileID: 0}
   MyCamera: {fileID: 0}
---- !u!1001 &5524614588821960946
+--- !u!1001 &7604123984794274318
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -95,7 +95,7 @@ PrefabInstance:
         type: 3}
       propertyPath: healthbar
       value: 
-      objectReference: {fileID: 149290817451177859}
+      objectReference: {fileID: 2827832849329751423}
     - target: {fileID: 5672631760246374637, guid: 0a87a2c255f088e489d106324c214385,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -108,17 +108,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a87a2c255f088e489d106324c214385, type: 3}
---- !u!1 &149290818522096666 stripped
+--- !u!1 &2827832848250050278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5672631760355122408, guid: 0a87a2c255f088e489d106324c214385,
     type: 3}
-  m_PrefabInstance: {fileID: 5524614588821960946}
+  m_PrefabInstance: {fileID: 7604123984794274318}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &149290817451177859 stripped
+--- !u!114 &2827832849329751423 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5672631759285243761, guid: 0a87a2c255f088e489d106324c214385,
     type: 3}
-  m_PrefabInstance: {fileID: 5524614588821960946}
+  m_PrefabInstance: {fileID: 7604123984794274318}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

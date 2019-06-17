@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Hunt : MonoBehaviour
 {
     public Transform player;
-    static Animator anim;
+    private Animator anim;
     public Slider healthbar;
 
 
@@ -34,7 +34,9 @@ public class Hunt : MonoBehaviour
                                 Quaternion.LookRotation(direction), 0.1f);
 
             anim.SetBool("isIdle", false);
-            if(direction.magnitude > 1)
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isAttacking", false);
+            if (direction.magnitude > 1)
             {
                 this.transform.Translate(0,0,0.05f);
                 anim.SetBool("isWalking",true);
