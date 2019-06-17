@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 5672631759797954116, guid: 0a87a2c255f088e489d106324c214385,
         type: 3}
       propertyPath: m_Name
-      value: Esqueleto_Inimigo
+      value: Inimigo
       objectReference: {fileID: 0}
     - target: {fileID: 5672631759797954117, guid: 0a87a2c255f088e489d106324c214385,
         type: 3}
@@ -72,21 +72,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5672631760246374637, guid: 0a87a2c255f088e489d106324c214385,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5672631760246374637, guid: 0a87a2c255f088e489d106324c214385,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5672631759904347404, guid: 0a87a2c255f088e489d106324c214385,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 2031157571366948573, guid: 0a87a2c255f088e489d106324c214385,
         type: 3}
       propertyPath: healthbar
@@ -102,6 +87,31 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5672631760246374637, guid: 0a87a2c255f088e489d106324c214385,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5672631760246374637, guid: 0a87a2c255f088e489d106324c214385,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5672631759777594819, guid: 0a87a2c255f088e489d106324c214385,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94f806a2bd17aaf41b6f8b64f8eabf66, type: 2}
+    - target: {fileID: 5672631759904347404, guid: 0a87a2c255f088e489d106324c214385,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5672631759843395640, guid: 0a87a2c255f088e489d106324c214385,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fab12545d6fdf8245af666ec487bf756, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a87a2c255f088e489d106324c214385, type: 3}
 --- !u!114 &149290817451177859 stripped
