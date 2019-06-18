@@ -20,6 +20,7 @@ public class PlayerCollisionDetect : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != opponent) return;
+        anim.SetTrigger("hit");
         healthbar.value -= 25;
         if (healthbar.value <= 0)
         {

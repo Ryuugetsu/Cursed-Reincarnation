@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5785046538358798105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149290818522096666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9802bfa3d4161b94f8cf1ec03800fda5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthbar: {fileID: 0}
+  opponent: 
+  enemy: {fileID: 0}
+--- !u!114 &4786173740833477811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149290818522096666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0ecfa85e7916e49b8143dbf7dd2627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCam: {fileID: 0}
 --- !u!1001 &5524614588821960946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72,6 +100,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6035354008408469387, guid: 0a87a2c255f088e489d106324c214385,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 2031157571366948573, guid: 0a87a2c255f088e489d106324c214385,
         type: 3}
       propertyPath: healthbar
@@ -112,8 +145,15 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: fab12545d6fdf8245af666ec487bf756, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9215109454456731592, guid: 0a87a2c255f088e489d106324c214385, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0a87a2c255f088e489d106324c214385, type: 3}
+--- !u!1 &149290818522096666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5672631760355122408, guid: 0a87a2c255f088e489d106324c214385,
+    type: 3}
+  m_PrefabInstance: {fileID: 5524614588821960946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &149290817451177859 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5672631759285243761, guid: 0a87a2c255f088e489d106324c214385,

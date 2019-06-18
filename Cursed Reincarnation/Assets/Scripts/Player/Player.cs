@@ -232,7 +232,7 @@ public class Player : MonoBehaviour {
             //de pé
             if ( Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D))
             {
-                isGrounded = true;
+               // isGrounded = true;
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
                 anim.SetBool("isIdle", false);
