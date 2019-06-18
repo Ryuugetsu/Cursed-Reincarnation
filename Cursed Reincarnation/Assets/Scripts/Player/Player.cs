@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float speed; //velocidade do estado atual (andando, correndo ou abaixado)
     [SerializeField] private float w_speed = 0.05f; //Velocidade Andando
     [SerializeField] private float r_speed = 0.1f; //Velocidade Correndo
+    [SerializeField] private float h_speed = 0.2f; //Velocidade Correndo mais rápido
     [SerializeField] private float c_speed = 0.025f; //Velocidade Abaixado
     [SerializeField] private float rotSpeed = 3.0f; //Velocidade de rotacionamente
     [SerializeField] private float jumpHeight = 135.0f; //Altura do pulo
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour {
 
     //novo - atalhos para testar mouse buttons etc
     public KeyCode attack1;
+    public KeyCode attack2;
 
 
     //novo - vida do player p parar as animações enquanto não temos tela de game over
@@ -31,14 +33,20 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private Transform cameraBase;
 
+    public bool Equiped = false;
+    [SerializeField] public GameObject item1;
+    public bool showItem;
 
-	// Use this for initialization
-	void Start () {
+
+
+    // Use this for initialization
+    void Start () {
 
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
         isGrounded = true;
+        showItem = false;
         Cursor.lockState = CursorLockMode.Locked; //travar e destravar o cursor durante o jogo
 	}
 	
@@ -54,6 +62,7 @@ public class Player : MonoBehaviour {
         Jump();
         Combat();
         MovementAnimation();
+        EquipWeapon();
 
         if(Input.GetKeyDown("escape"))
             Cursor.lockState = CursorLockMode.None;
@@ -110,25 +119,66 @@ public class Player : MonoBehaviour {
         }
     }
 
+    void EquipWeapon()
+    {
+        if (showItem == false)
+        {
+            item1.SetActive(false);
+        }
+        if (showItem == true)
+        {
+            item1.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1) && showItem == false)
+        {
+            anim.SetTrigger("toEquip");
+            showItem = true;
+            anim.SetBool("isEquiped", true);
+            Equiped = true;
+            
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && showItem == true)
+        {
+            anim.SetTrigger("toUnEquip");
+            showItem = false;
+            anim.SetBool("isEquiped", false);
+            Equiped = false;
+        }
+        
+        else {
+            anim.SetBool("isEquiped", false);
+        }
+
+    }
+
     void Combat()
     {
         //soco simples
-        if (Input.GetKeyDown (attack1) && isGrounded == true)
+
+        if (Input.GetKeyDown(attack2) && isGrounded == true)
         {
             anim.SetBool("attacking2", true);
         }
-        else 
+        else
         {
-			anim.SetBool ("attacking2", false);
-		}
+            anim.SetBool("attacking2", false);
+        }
 
-        /* ataque 2 - chute simples
-        if (Input.GetKeyDown (attack2) && isGrounded == true)
+
+        //golpe de adaga
+
+        if (Input.GetKeyDown(attack1) && isGrounded == true)
         {
-            anim.SetBool("attacking1", true);
+           anim.SetBool("attacking1", true);
+        }
+        else
+        {
+            anim.SetBool("attacking1", false);
+        }
 
-            
-        }*/
     }
 
     void MovementAnimation()
@@ -182,6 +232,7 @@ public class Player : MonoBehaviour {
             //de pé
             if ( Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D))
             {
+               // isGrounded = true;
                 anim.SetBool("isWalking", true);
                 anim.SetBool("isRunning", false);
                 anim.SetBool("isIdle", false);
